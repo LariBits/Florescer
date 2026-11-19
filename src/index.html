@@ -1,3 +1,6 @@
+
+mvp-Florescer
+100%
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,7 +10,914 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --creme:    #F4E7D8;
+    --rosa-pes: #F6D1C9;
+    --rosa-cha: #EFC0B2;
+    --bege:     #E8B28A;
+    --coral:    #F28C6B;
+    --terracota:#D96B4D;
+    --lavanda:  #B07CC6;
+    --lavanda-esc: #7A4A93;
+    --malva:    #8B5A7A;
+    --ameixa:   #5A2E52;
+    --texto:    #2D1B26;
+    --texto-sec:#6B3D5C;
+    --fundo:    #FDF6F0;
+    --branco:   #FFFFFF;
+    --sombra:   0 2px 12px rgba(90,46,82,0.10);
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 22px;
+    --r-pill: 999px;
+  }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── TELAS ──────────────────────────────────────────── */
+  .tela { display: none; flex-direction: column; min-height: 100vh; }
+  .tela.ativa { display: flex; }
+
+  /* ── TOPBAR ─────────────────────────────────────────── */
+  .topbar {
+    background: var(--ameixa);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--creme);
+    letter-spacing: 0.04em;
+  }
+  .topbar-logo span { color: var(--coral); }
+  .topbar-btn {
+    background: none;
+    border: none;
+    color: var(--creme);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+  }
+  .topbar-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  /* ── HERO ────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(160deg, var(--ameixa) 0%, var(--malva) 100%);
+    padding: 36px 24px 44px;
+    color: var(--branco);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(242,140,107,0.25);
+    color: var(--coral);
+    border: 1px solid rgba(242,140,107,0.4);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--creme);
+  }
+  .hero h1 em { color: var(--coral); font-style: normal; }
+  .hero p {
+    font-size: 0.9rem;
+    color: rgba(244,231,216,0.85);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-primario {
+    background: var(--coral);
+    color: var(--texto);
+    border: none;
+    padding: 12px 22px;
+    border-radius: var(--r-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-primario:hover { background: var(--bege); }
+  .btn-secundario {
+    background: rgba(255,255,255,0.12);
+    color: var(--creme);
+    border: 1px solid rgba(244,231,216,0.35);
+    padding: 12px 22px;
+    border-radius: var(--r-pill);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-secundario:hover { background: rgba(255,255,255,0.2); }
+
+  /* ── STATS STRIP ─────────────────────────────────────── */
+  .stats-strip {
+    display: flex;
+    background: var(--branco);
+    border-bottom: 1px solid var(--rosa-cha);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stats-strip::-webkit-scrollbar { display: none; }
+  .stat-item {
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+    padding: 16px 8px;
+    border-right: 1px solid var(--rosa-cha);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ameixa);
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--texto-sec);
+    line-height: 1.3;
+  }
+
+  /* ── SECOES ──────────────────────────────────────────── */
+  .secao { padding: 28px 20px; }
+  .secao + .secao { padding-top: 0; }
+  .secao-titulo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ameixa);
+    margin-bottom: 4px;
+  }
+  .secao-sub {
+    font-size: 0.8rem;
+    color: var(--texto-sec);
+    margin-bottom: 18px;
+  }
+
+  /* ── BUSCA ───────────────────────────────────────────── */
+  .campo-busca {
+    display: flex;
+    align-items: center;
+    background: var(--branco);
+    border: 1.5px solid var(--rosa-cha);
+    border-radius: var(--r-pill);
+    padding: 10px 16px;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .campo-busca svg { width: 18px; height: 18px; stroke: var(--malva); fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+  .campo-busca input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--texto);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+  }
+  .campo-busca input::placeholder { color: var(--texto-sec); }
+
+  /* ── FILTROS ─────────────────────────────────────────── */
+  .filtros {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+  }
+  .filtros::-webkit-scrollbar { display: none; }
+  .filtro-btn {
+    flex-shrink: 0;
+    padding: 7px 16px;
+    border-radius: var(--r-pill);
+    border: 1.5px solid var(--rosa-cha);
+    background: var(--branco);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--malva);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+  }
+  .filtro-btn.ativo, .filtro-btn:hover {
+    background: var(--ameixa);
+    border-color: var(--ameixa);
+    color: var(--creme);
+  }
+
+  /* ── CARDS COLETIVO ──────────────────────────────────── */
+  .grid-coletivos { display: flex; flex-direction: column; gap: 14px; }
+  .card-coletivo {
+    background: var(--branco);
+    border-radius: var(--r-md);
+    border: 1px solid var(--rosa-cha);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .card-coletivo:hover { box-shadow: var(--sombra); transform: translateY(-1px); }
+  .card-coletivo-header {
+    background: var(--ameixa);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--coral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--branco);
+    flex-shrink: 0;
+  }
+  .avatar.lav { background: var(--lavanda); }
+  .avatar.bege { background: var(--bege); color: var(--ameixa); }
+  .avatar.malva { background: var(--malva); }
+  .avatar.rosa { background: var(--rosa-cha); color: var(--ameixa); }
+  .card-nome { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--creme); line-height: 1.3; }
+  .card-lider { font-size: 0.75rem; color: rgba(244,231,216,0.7); margin-top: 2px; }
+  .card-corpo { padding: 14px 16px; }
+  .card-tag {
+    display: inline-block;
+    background: var(--creme);
+    color: var(--terracota);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    margin-bottom: 10px;
+    border: 1px solid var(--rosa-cha);
+  }
+  .card-desc { font-size: 0.83rem; color: var(--texto-sec); line-height: 1.5; margin-bottom: 12px; }
+  .card-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-local {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: var(--malva);
+  }
+  .card-local svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+  .btn-ver {
+    background: var(--creme);
+    border: 1px solid var(--rosa-cha);
+    color: var(--ameixa);
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-ver:hover { background: var(--ameixa); color: var(--creme); border-color: var(--ameixa); }
+
+  /* ── MAPA PLACEHOLDER ─────────────────────────────────── */
+  .mapa-container {
+    background: var(--rosa-pes);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    position: relative;
+    height: 260px;
+    border: 1px solid var(--rosa-cha);
+  }
+  .mapa-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mapa-bg svg { width: 48px; height: 48px; stroke: var(--malva); fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.6; }
+  .mapa-pins {
+    position: absolute;
+    inset: 0;
+  }
+  .pin {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: var(--ameixa);
+    border: 2.5px solid var(--branco);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg) translate(-50%, -50%);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .pin::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--coral);
+    border-radius: 50%;
+  }
+  .pin:hover { transform: rotate(-45deg) translate(-50%, -50%) scale(1.15); }
+  .pin-tooltip {
+    position: absolute;
+    background: var(--ameixa);
+    color: var(--creme);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--r-sm);
+    white-space: nowrap;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .pin:hover .pin-tooltip { opacity: 1; }
+  .mapa-legenda {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(255,255,255,0.92);
+    border-radius: var(--r-sm);
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    color: var(--texto-sec);
+    border: 1px solid var(--rosa-cha);
+  }
+  .mapa-legenda strong { color: var(--ameixa); }
+
+  /* ── CONTATOS EMERGENCIA ──────────────────────────────── */
+  .lista-contatos { display: flex; flex-direction: column; gap: 10px; }
+  .card-contato {
+    background: var(--branco);
+    border: 1px solid var(--rosa-cha);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .contato-icone {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--r-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contato-icone svg { width: 22px; height: 22px; stroke: var(--branco); fill: none; stroke-width: 2; stroke-linecap: round; }
+  .contato-icone.urgente { background: var(--terracota); }
+  .contato-icone.apoio   { background: var(--lavanda); }
+  .contato-icone.saude   { background: var(--malva); }
+  .contato-info { flex: 1; }
+  .contato-nome { font-weight: 600; font-size: 0.88rem; color: var(--ameixa); }
+  .contato-desc { font-size: 0.75rem; color: var(--texto-sec); margin-top: 2px; }
+  .btn-ligar {
+    background: var(--creme);
+    border: 1px solid var(--rosa-cha);
+    color: var(--terracota);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-ligar:hover { background: var(--terracota); color: var(--branco); border-color: var(--terracota); }
+
+  /* ── EVENTOS ─────────────────────────────────────────── */
+  .lista-eventos { display: flex; flex-direction: column; gap: 12px; }
+  .card-evento {
+    background: var(--branco);
+    border: 1px solid var(--rosa-cha);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .evento-data {
+    background: var(--ameixa);
+    color: var(--creme);
+    border-radius: var(--r-sm);
+    padding: 8px 10px;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 48px;
+  }
+  .evento-dia { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.3rem; line-height: 1; }
+  .evento-mes { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; opacity: 0.8; }
+  .evento-info { flex: 1; }
+  .evento-titulo { font-weight: 600; font-size: 0.9rem; color: var(--ameixa); margin-bottom: 4px; }
+  .evento-meta { font-size: 0.75rem; color: var(--texto-sec); display: flex; flex-direction: column; gap: 3px; }
+  .evento-tag {
+    display: inline-block;
+    background: var(--creme);
+    color: var(--lavanda);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--rosa-cha);
+    margin-top: 6px;
+  }
+
+  /* ── PERFIL COLETIVO ──────────────────────────────────── */
+  .perfil-header {
+    background: var(--ameixa);
+    padding: 24px 20px 20px;
+  }
+  .perfil-voltar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(244,231,216,0.7);
+    font-size: 0.82rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .perfil-voltar svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+  .perfil-topo {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .perfil-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--coral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--branco);
+    border: 3px solid rgba(244,231,216,0.3);
+    flex-shrink: 0;
+  }
+  .perfil-dados { flex: 1; }
+  .perfil-nome {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .perfil-lider { font-size: 0.8rem; color: rgba(244,231,216,0.7); margin-bottom: 10px; }
+  .perfil-tag {
+    display: inline-block;
+    background: rgba(242,140,107,0.2);
+    color: var(--coral);
+    border: 1px solid rgba(242,140,107,0.4);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+  }
+  .perfil-corpo { padding: 20px; }
+  .perfil-secao { margin-bottom: 22px; }
+  .perfil-secao-titulo {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lavanda-esc);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--rosa-cha);
+    padding-bottom: 6px;
+  }
+  .perfil-texto { font-size: 0.88rem; color: var(--texto-sec); line-height: 1.6; }
+  .perfil-linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--texto-sec);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--creme);
+  }
+  .perfil-linha:last-child { border-bottom: none; }
+  .perfil-linha svg { width: 18px; height: 18px; stroke: var(--lavanda); fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+  .perfil-linha strong { color: var(--ameixa); }
+  .btn-whats {
+    width: 100%;
+    background: #25D366;
+    color: var(--branco);
+    border: none;
+    padding: 14px;
+    border-radius: var(--r-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .btn-whats svg { width: 20px; height: 20px; fill: var(--branco); }
+
+  /* ── LOGIN ───────────────────────────────────────────── */
+  .login-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+  .login-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ameixa);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .login-logo em { color: var(--coral); font-style: normal; }
+  .login-sub { text-align: center; font-size: 0.85rem; color: var(--texto-sec); margin-bottom: 36px; }
+  .form-grupo { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--ameixa); margin-bottom: 6px; }
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--rosa-cha);
+    border-radius: var(--r-md);
+    font-size: 0.9rem;
+    color: var(--texto);
+    background: var(--branco);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--lavanda); }
+  .login-esqueci { text-align: right; font-size: 0.85rem; color: var(--lavanda-esc); cursor: pointer; margin-bottom: 24px; }
+  .btn-login {
+    width: 100%;
+    background: var(--ameixa);
+    color: var(--creme);
+    border: none;
+    padding: 14px;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-login:hover { background: var(--malva); }
+  .login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: var(--rosa-cha);
+    font-size: 0.8rem;
+  }
+  .login-divider::before, .login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rosa-cha);
+  }
+
+  /* ── PAINEL ──────────────────────────────────────────── */
+  .painel-boas {
+    background: var(--ameixa);
+    padding: 20px;
+    color: var(--creme);
+  }
+  .painel-boas p { font-size: 0.82rem; opacity: 0.7; margin-bottom: 2px; }
+  .painel-boas h2 { font-family: 'Poppins', sans-serif; font-size: 1.15rem; font-weight: 700; }
+  .painel-coletivo {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(244,231,216,0.2);
+    border-radius: var(--r-sm);
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: rgba(244,231,216,0.85);
+  }
+  .painel-coletivo strong { color: var(--coral); display: block; font-size: 0.9rem; margin-bottom: 2px; }
+  .grid-acoes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 20px; }
+  .acao-card {
+    background: var(--branco);
+    border: 1px solid var(--rosa-cha);
+    border-radius: var(--r-md);
+    padding: 18px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .acao-card:hover { box-shadow: var(--sombra); transform: translateY(-1px); border-color: var(--lavanda); }
+  .acao-icone {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--r-sm);
+    background: var(--creme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .acao-icone svg { width: 24px; height: 24px; stroke: var(--ameixa); fill: none; stroke-width: 2; stroke-linecap: round; }
+  .acao-titulo { font-weight: 600; font-size: 0.85rem; color: var(--ameixa); margin-bottom: 4px; }
+  .acao-desc { font-size: 0.72rem; color: var(--texto-sec); line-height: 1.4; }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--creme);
+    border: 1px solid var(--rosa-cha);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ameixa);
+    margin: 0 20px 20px;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; }
+
+  /* ── NAV BOTTOM ──────────────────────────────────────── */
+  .nav-bottom {
+    position: sticky;
+    bottom: 0;
+    background: var(--branco);
+    border-top: 1px solid var(--rosa-cha);
+    display: flex;
+    z-index: 100;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 10px 4px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'Inter', sans-serif;
+    color: var(--texto-sec);
+    font-size: 0.65rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .nav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; transition: stroke 0.15s; }
+  .nav-item.ativo { color: var(--ameixa); }
+  .nav-item.ativo svg { stroke: var(--ameixa); }
+
+  /* ── TOAST ───────────────────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ameixa);
+    color: var(--creme);
+    padding: 12px 20px;
+    border-radius: var(--r-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 200;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    pointer-events: none;
+  }
+  .toast.visivel { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── UTILITARIOS ─────────────────────────────────────── */
+  .mt-4 { margin-top: 4px; }
+  .mt-8 { margin-top: 8px; }
+  .divider { height: 1px; background: var(--creme); margin: 0 20px; }
+
+  /* ── GERENCIAR EVENTOS ───────────────────────────────── */
+  :focus-visible { outline: 3px solid var(--lavanda); outline-offset: 2px; }
+  .toast { white-space: normal; max-width: 90%; text-align: center; }
+  .ge-head { background: var(--ameixa); color: var(--creme); padding: 4px 20px 22px; }
+  .ge-head h2 { font-family: 'Poppins', sans-serif; font-size: 1.2rem; }
+  .ge-head p { font-size: 0.8rem; opacity: .8; margin-top: 2px; }
+  .ge-novo { margin: 16px 20px 4px; width: calc(100% - 40px); min-height: 48px; background: var(--coral); color: #2D1B26; border: none; border-radius: var(--r-pill); font-weight: 700; font-size: 0.92rem; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .ge-novo:hover { background: var(--bege); }
+  .ge-lista { display: flex; flex-direction: column; gap: 12px; padding: 0 20px 28px; }
+  .ge-card { background: var(--branco); border: 1px solid var(--rosa-cha); border-radius: var(--r-md); padding: 14px; }
+  .ge-card.inativo { opacity: .85; background: #FBF6F2; }
+  .ge-topo { display: flex; gap: 12px; }
+  .ge-data { background: var(--ameixa); color: var(--creme); border-radius: var(--r-sm); padding: 8px 10px; text-align: center; min-width: 48px; height: fit-content; }
+  .ge-data b { display: block; font-family: 'Poppins', sans-serif; font-size: 1.2rem; line-height: 1; }
+  .ge-data span { font-size: .62rem; font-weight: 600; letter-spacing: .05em; }
+  .ge-info { flex: 1; min-width: 0; }
+  .ge-titulo { font-weight: 600; font-size: .92rem; color: var(--ameixa); margin-bottom: 3px; }
+  .ge-meta { font-size: .78rem; color: var(--texto-sec); line-height: 1.5; }
+  .badge { display: inline-block; font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill); margin-bottom: 6px; }
+  .b-ativo { background: #E3F3E6; color: #1F6B3A; }
+  .b-lotado { background: #FCE9CF; color: #8A4B00; }
+  .b-cancelado { background: #F9DDD7; color: #9B2C1C; }
+  .b-encerrado { background: #ECE4E8; color: #5B4A55; }
+  .vagas { margin-top: 12px; }
+  .vagas-txt { display: flex; justify-content: space-between; font-size: .75rem; color: var(--texto-sec); margin-bottom: 5px; }
+  .vagas-txt strong { color: var(--ameixa); }
+  .barra { height: 8px; background: var(--creme); border-radius: var(--r-pill); overflow: hidden; }
+  .barra i { display: block; height: 100%; background: var(--lavanda); }
+  .barra i.cheia { background: var(--terracota); }
+  .ge-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--creme); }
+  .ge-btn { min-height: 40px; padding: 0 14px; border-radius: var(--r-pill); border: 1.5px solid var(--rosa-cha); background: var(--branco); color: var(--ameixa); font-size: .78rem; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .ge-btn:hover { background: var(--ameixa); color: var(--creme); border-color: var(--ameixa); }
+  .ge-btn.zap { border-color: #1E8E4A; color: #166B37; }
+  .ge-btn.zap:hover { background: #1E8E4A; color: #fff; }
+  .ge-btn.perigo { color: #9B2C1C; border-color: #E9B7AD; }
+  .ge-btn.perigo:hover { background: #9B2C1C; color: #fff; border-color: #9B2C1C; }
+  .ge-vazio { text-align: center; padding: 28px 16px; color: var(--texto-sec); font-size: .88rem; background: var(--branco); border: 1px dashed var(--rosa-cha); border-radius: var(--r-md); }
+  .cal { background: var(--branco); border: 1px solid var(--rosa-cha); border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sombra); }
+  .cal-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px; border-bottom: 1px solid var(--rosa-cha); }
+  .cal-bar button { min-height: 40px; border: 1.5px solid var(--rosa-cha); background: var(--branco); color: var(--ameixa); border-radius: var(--r-pill); font-weight: 600; font-size: .8rem; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0 14px; }
+  .cal-bar button:hover { background: var(--ameixa); color: var(--creme); border-color: var(--ameixa); }
+  .cal-bar .cal-seta { width: 40px; padding: 0; font-size: 1.2rem; border-color: transparent; }
+  .cal-titulo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--ameixa); text-transform: capitalize; flex: 1; min-width: 120px; }
+  .cal-modo { display: flex; border: 1.5px solid var(--rosa-cha); border-radius: var(--r-pill); overflow: hidden; }
+  .cal-modo button { border: none; border-radius: 0; min-height: 36px; }
+  .cal-modo button.ativo { background: var(--ameixa); color: var(--creme); }
+  .cal-grade { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .cal-sem { text-align: center; font-size: .68rem; font-weight: 700; color: var(--malva); text-transform: uppercase; letter-spacing: .05em; padding: 8px 0; border-bottom: 1px solid var(--rosa-cha); }
+  .cal-cel { min-height: 76px; padding: 4px 3px; border-right: 1px solid var(--creme); border-bottom: 1px solid var(--creme); background: var(--branco); cursor: pointer; display: flex; flex-direction: column; gap: 2px; text-align: left; font-family: 'Inter', sans-serif; }
+  .cal-cel:nth-child(7n) { border-right: 0; }
+  .cal-cel:hover { background: var(--fundo); }
+  .cal-cel.fora { background: #FBF6F2; }
+  .cal-cel.fora .cal-num { color: #B9A3AE; }
+  .cal-cel.passado { cursor: default; }
+  .cal-num { align-self: center; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 50%; font-size: .75rem; font-weight: 600; color: var(--texto); }
+  .cal-cel.hoje .cal-num { background: var(--ameixa); color: var(--creme); }
+  .cal-chip { display: block; width: 100%; border: none; border-radius: 4px; padding: 2px 4px; font-size: .62rem; font-weight: 600; line-height: 1.35; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; font-family: 'Inter', sans-serif; background: var(--coral); color: var(--texto); }
+  .cal-chip.c-lotado { background: var(--terracota); color: #fff; }
+  .cal-chip.c-cancelado, .cal-chip.c-encerrado { background: var(--rosa-pes); color: var(--texto-sec); text-decoration: line-through; }
+  .cal-mais { font-size: .62rem; font-weight: 700; color: var(--malva); background: none; border: none; text-align: left; padding: 1px 4px; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .cal-det { display: flex; flex-direction: column; gap: 6px; margin: 4px 0 12px; font-size: .9rem; color: var(--texto-sec); }
+  .cal-dia-lista { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 12px; }
+  .cal-dia-lista .ge-btn { text-align: left; }
+  .ge-form { padding: 20px; }
+  .form-input.erro { border-color: #B3261E; }
+  .form-erro { color: #B3261E; font-size: .78rem; margin-top: 5px; font-weight: 500; }
+  .form-dica { color: var(--texto-sec); font-size: .75rem; margin-top: 5px; }
+  textarea.form-input { min-height: 96px; resize: vertical; }
+  .form-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opcoes { display: flex; gap: 10px; }
+  .opcao { flex: 1; position: relative; }
+  .opcao input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .opcao span { display: block; text-align: center; padding: 12px 8px; border: 1.5px solid var(--rosa-cha); border-radius: var(--r-md); background: var(--branco); font-size: .85rem; font-weight: 600; color: var(--malva); }
+  .opcao input:checked + span { background: var(--ameixa); color: var(--creme); border-color: var(--ameixa); }
+  .opcao input:focus-visible + span { outline: 3px solid var(--lavanda); outline-offset: 2px; }
+  .aviso { background: #FFF4E0; border: 1.5px solid #E8B28A; border-radius: var(--r-md); padding: 12px 14px; font-size: .82rem; color: #5A3A00; margin-bottom: 16px; line-height: 1.5; }
+  .aviso label { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; font-weight: 600; cursor: pointer; }
+  .aviso input { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; accent-color: var(--ameixa); }
+  .nota-email { font-size: .78rem; color: var(--texto-sec); background: var(--creme); border-radius: var(--r-md); padding: 10px 14px; margin-bottom: 16px; line-height: 1.5; }
+  .btn-sec-full { width: 100%; margin-top: 10px; min-height: 48px; background: none; border: 1.5px solid var(--rosa-cha); border-radius: var(--r-pill); color: var(--ameixa); font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; font-size: .9rem; }
+  .sheet-bg { position: fixed; inset: 0; background: rgba(45,27,38,.55); z-index: 300; display: none; align-items: flex-end; justify-content: center; }
+  .sheet-bg.aberto { display: flex; }
+  .sheet { background: var(--branco); width: 100%; max-width: 430px; border-radius: 22px 22px 0 0; padding: 22px 20px 26px; max-height: 92vh; overflow: auto; }
+  .sheet h3 { font-family: 'Poppins', sans-serif; color: var(--ameixa); font-size: 1.05rem; margin-bottom: 6px; }
+  .sheet p { font-size: .85rem; color: var(--texto-sec); line-height: 1.5; margin-bottom: 14px; }
+  .sheet canvas { width: 100%; border-radius: var(--r-md); border: 1px solid var(--rosa-cha); margin-bottom: 12px; }
+  .ge-btn { min-height: 44px; font-size: .875rem; padding: 0 16px; }
+  .ge-btn.forte { background: var(--ameixa); color: var(--creme); border-color: var(--ameixa); }
+  .ge-btn.forte:hover { background: var(--malva); border-color: var(--malva); }
+  .ge-link { background: none; border: none; color: #9B2C1C; text-decoration: underline; font-size: .875rem; font-weight: 600; min-height: 44px; margin-left: auto; padding: 0 4px; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .ge-meta, .form-erro { font-size: .875rem; }
+  .badge { font-size: .8rem; }
+  .vagas-txt, .form-dica, .nota-email { font-size: .85rem; }
+  .aviso { font-size: .9rem; }
+  .ge-data span { font-size: .75rem; }
+  .stat-label { font-size: .8rem; }
+  .nav-item { font-size: .75rem; }
+  .evento-meta, .card-lider, .status-badge { font-size: .85rem; }
+  .acao-desc { font-size: .82rem; }
+
+/* ══ DESKTOP (a partir de 960px) ══ */
+@media (min-width: 960px) {
+  :root { --pad: max(48px, calc((100vw - 1120px) / 2)); }
+  body { max-width: none; }
+  .toast { bottom: 28px; }
+  .topbar { min-height: 64px; padding-left: var(--pad); padding-right: var(--pad); }
+  .topbar-logo { font-size: 1.45rem; }
+  .topbar-btn { font-size: .95rem; min-height: 44px; }
+  .nav-bottom { position: fixed; top: 0; bottom: auto; left: 50%; transform: translateX(-50%); width: auto; height: 64px; background: transparent; border: none; z-index: 101; }
+  .nav-item { flex-direction: row; gap: 8px; padding: 0 20px; font-size: .95rem; color: var(--creme); height: 64px; align-items: center; }
+  .nav-item svg { width: 20px; height: 20px; }
+  .nav-item:hover { background: rgba(255,255,255,.08); }
+  .nav-item.ativo { color: var(--coral); box-shadow: inset 0 -3px 0 var(--coral); }
+  .nav-item.ativo svg { stroke: var(--coral); }
+  .hero { padding: 80px var(--pad) 88px; }
+  .hero h1 { font-size: 3.2rem; max-width: 720px; }
+  .hero p { font-size: 1.1rem; max-width: 560px; }
+  .stats-strip { justify-content: center; }
+  .stat-item { padding: 26px 12px; max-width: 240px; }
+  .stat-num { font-size: 1.9rem; }
+  .stat-label { font-size: .9rem; }
+  .secao { padding: 48px var(--pad) 28px; }
+  .secao + .secao { padding-top: 0; }
+  .secao-titulo { font-size: 1.45rem; }
+  .secao-sub { font-size: .95rem; margin-bottom: 24px; }
+  .grid-coletivos { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .lista-eventos, .lista-contatos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .campo-busca { max-width: 520px; }
+  .filtros { flex-wrap: wrap; overflow: visible; }
+  .filtro-btn { min-height: 44px; font-size: .9rem; }
+  .mapa-container { height: 540px; }
+  .perfil-header { padding-left: var(--pad); padding-right: var(--pad); }
+  .perfil-corpo { padding: 40px var(--pad); display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 56px; align-items: start; }
+  .perfil-corpo > .btn-whats, .perfil-corpo > .btn-secundario { grid-column: 1 / -1; max-width: 420px; }
+  .login-wrap { flex: none; width: 460px; max-width: 100%; margin: 72px auto; background: var(--branco); border: 1px solid var(--rosa-cha); border-radius: var(--r-lg); padding: 44px 40px; box-shadow: var(--sombra); }
+  .painel-boas { padding: 40px var(--pad); }
+  .painel-boas h2 { font-size: 1.6rem; }
+  .painel-coletivo { max-width: 420px; }
+  .status-badge { margin: 28px var(--pad) 0; align-self: flex-start; }
+  .grid-acoes { grid-template-columns: repeat(4, 1fr); padding: 24px var(--pad); gap: 18px; }
+  .acao-card { padding: 26px 18px; }
+  .acao-desc { font-size: .88rem; }
+  #tela-painel > div[style] { padding: 0 var(--pad) 48px !important; }
+  .ge-head { padding: 36px var(--pad) 28px; }
+  .ge-head h2 { font-size: 1.6rem; }
+  #tela-gerenciar .stats-strip { justify-content: flex-start; padding: 0 var(--pad); background: var(--branco); }
+  #tela-gerenciar .stat-item { max-width: 200px; }
+  .ge-cal-wrap { padding: 24px var(--pad) 0 !important; }
+  .ge-cal-wrap { padding: 24px var(--pad) 0 !important; }
+  .cal-cel { min-height: 110px; padding: 6px; gap: 3px; }
+  .cal-num { font-size: .85rem; }
+  .cal-chip { font-size: .75rem; padding: 3px 7px; }
+  .cal-mais { font-size: .75rem; }
+  .ge-novo { width: auto; margin: 24px var(--pad) 0; padding: 0 28px; align-self: flex-start; }
+  #tela-gerenciar > div[style] { padding: 18px var(--pad) 0 !important; }
+  .ge-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 18px; padding: 0 var(--pad) 48px; align-items: start; }
+  .ge-card { padding: 18px; }
+  /* formulario como painel lateral sobre a lista */
+  #tela-evento-form { position: fixed; top: 0; right: 0; height: 100vh; width: 540px; max-width: 100%; z-index: 250; background: var(--branco); overflow: auto; box-shadow: 0 0 0 100vmax rgba(45,27,38,.45); }
+  #tela-evento-form .topbar { position: static; padding: 0 24px; }
+  #tela-evento-form .ge-head { padding: 24px 28px; }
+  #tela-evento-form .ge-form { padding: 24px 28px 36px; }
+  .sheet-bg { align-items: center; }
+  .sheet { border-radius: var(--r-lg); max-width: 480px; width: calc(100% - 40px); padding: 26px; }
+  .sheet canvas { width: auto; max-width: 100%; max-height: 52vh; display: block; margin: 0 auto 14px; }
+}
+</style>
 </head>
 <body>
 
@@ -27,7 +937,7 @@
   <div class="hero">
     <div class="hero-tag">Hub das mulheres de SJBVista</div>
     <h1>Encontre sua <em>rede</em> de apoio</h1>
-    <p>Coletivos femininos de São João da Boa Vista reunidos em um só lugar. Apoio, cultura, empoderamento e sororidade perto de você.</p>
+    <p>Coletivos femininos de Sao Joao da Boa Vista reunidos em um so lugar. Apoio, cultura, empoderamento e sororidade perto de voce.</p>
     <div class="hero-actions">
       <button class="btn-primario" onclick="irNav('coletivos')">Ver coletivos</button>
       <button class="btn-secundario" onclick="irNav('emergencia')">Contatos de apoio</button>
@@ -49,25 +959,25 @@
     </div>
     <div class="stat-item">
       <span class="stat-num">SJBVista</span>
-      <span class="stat-label">e região</span>
+      <span class="stat-label">e regiao</span>
     </div>
   </div>
 
   <div class="secao">
     <p class="secao-titulo">Coletivos em destaque</p>
-    <p class="secao-sub">Conheça as redes que cuidam de você</p>
+    <p class="secao-sub">Conheca as redes que cuidam de voce</p>
     <div class="grid-coletivos">
       <div class="card-coletivo" onclick="irPerfil(0)">
         <div class="card-coletivo-header">
           <div class="avatar">ME</div>
           <div>
             <div class="card-nome">Mulheres Empoderadas</div>
-            <div class="card-lider">Liderança: Valeria</div>
+            <div class="card-lider">Lideranca: Valeria</div>
           </div>
         </div>
         <div class="card-corpo">
           <span class="card-tag">Empoderamento</span>
-          <p class="card-desc">Espaço de fortalecimento feminino, autoestima e suporte mútuo para mulheres de todas as idades.</p>
+          <p class="card-desc">Espaco de fortalecimento feminino, autoestima e suporte mutuo para mulheres de todas as idades.</p>
           <div class="card-rodape">
             <span class="card-local">
               <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -83,12 +993,12 @@
           <div class="avatar lav">RS</div>
           <div>
             <div class="card-nome">Roda Sagrada de Mulheres</div>
-            <div class="card-lider">Liderança: Elaine Menato</div>
+            <div class="card-lider">Lideranca: Elaine Menato</div>
           </div>
         </div>
         <div class="card-corpo">
           <span class="card-tag" style="color:var(--malva)">Espiritualidade</span>
-          <p class="card-desc">Encontros de cura, ancestralidade e reconexão com o feminino sagrado por meio de rodas e rituais.</p>
+          <p class="card-desc">Encontros de cura, ancestralidade e reconexao com o feminino sagrado por meio de rodas e rituais.</p>
           <div class="card-rodape">
             <span class="card-local">
               <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -140,7 +1050,7 @@
 
   <div class="secao">
     <p class="secao-titulo">Coletivos</p>
-    <p class="secao-sub">Encontre redes femininas em São João da Boa Vista</p>
+    <p class="secao-sub">Encontre redes femininas em Sao Joao da Boa Vista</p>
 
     <div class="campo-busca">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -200,7 +1110,7 @@
     <div class="mapa-container">
       <div class="mapa-bg">
         <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-        <span style="font-size:0.78rem;color:var(--malva);font-weight:500">São João da Boa Vista e região</span>
+        <span style="font-size:0.78rem;color:var(--malva);font-weight:500">Sao Joao da Boa Vista e regiao</span>
       </div>
       <div class="mapa-pins">
         <div class="pin" style="top:35%;left:45%" onclick="irPerfil(0)">
@@ -319,7 +1229,7 @@
           <div class="evento-titulo">Validacao da plataforma FLORESCER</div>
           <div class="evento-meta">
             <span>Sala do IFSP-SBV, 19h</span>
-            <span>Encontro com as lideranças</span>
+            <span>Encontro com as liderancas</span>
           </div>
           <span class="evento-tag">Presencial</span>
         </div>
@@ -331,9 +1241,9 @@
           <div class="evento-mes">JUN</div>
         </div>
         <div class="evento-info">
-          <div class="evento-titulo">Roda de Conversa — Saúde da Mulher</div>
+          <div class="evento-titulo">Roda de Conversa — Saude da Mulher</div>
           <div class="evento-meta">
-            <span>Praça da Matriz, 15h</span>
+            <span>Praca da Matriz, 15h</span>
             <span>Roda Sagrada de Mulheres</span>
           </div>
           <span class="evento-tag" style="color:var(--malva)">Presencial</span>
@@ -361,10 +1271,10 @@
           <div class="evento-mes">JUL</div>
         </div>
         <div class="evento-info">
-          <div class="evento-titulo">Avaliação comunitária — FLORESCER</div>
+          <div class="evento-titulo">Avaliacao comunitaria — FLORESCER</div>
           <div class="evento-meta">
             <span>IFSP-SBV, 19h45</span>
-            <span>Todas as lideranças</span>
+            <span>Todas as liderancas</span>
           </div>
           <span class="evento-tag" style="color:var(--terracota)">Presencial</span>
         </div>
@@ -422,15 +1332,15 @@
 
   <div class="secao">
     <p class="secao-titulo">Rede de apoio</p>
-    <p class="secao-sub">Contatos de emergência e serviços de suporte</p>
+    <p class="secao-sub">Contatos de emergencia e servicos de suporte</p>
 
     <div style="background:var(--creme);border:1px solid var(--rosa-cha);border-radius:var(--r-md);padding:14px 16px;margin-bottom:20px">
       <p style="font-size:0.82rem;color:var(--ameixa);font-weight:600;margin-bottom:4px">Precisa de ajuda agora?</p>
-      <p style="font-size:0.78rem;color:var(--texto-sec);line-height:1.5">Ligue gratuitamente para a Central de Atendimento a Mulher. Disponível 24 horas, 7 dias por semana.</p>
+      <p style="font-size:0.78rem;color:var(--texto-sec);line-height:1.5">Ligue gratuitamente para a Central de Atendimento a Mulher. Disponivel 24 horas, 7 dias por semana.</p>
       <button class="btn-primario" style="margin-top:12px;width:100%;text-align:center" onclick="mostrarToast('Ligando para 180...')">Ligar para o 180</button>
     </div>
 
-    <p style="font-size:0.8rem;font-weight:700;color:var(--lavanda);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid var(--rosa-cha);padding-bottom:6px">Urgencia e seguranca</p>
+    <p style="font-size:0.8rem;font-weight:700;color:var(--lavanda-esc);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid var(--rosa-cha);padding-bottom:6px">Urgencia e seguranca</p>
 
     <div class="lista-contatos">
       <div class="card-contato">
@@ -439,7 +1349,7 @@
         </div>
         <div class="contato-info">
           <div class="contato-nome">Central da Mulher — 180</div>
-          <div class="contato-desc">Denúncia, orientação e encaminhamento. 24h/dia.</div>
+          <div class="contato-desc">Denuncia, orientacao e encaminhamento. 24h/dia.</div>
         </div>
         <button class="btn-ligar" onclick="mostrarToast('Ligando para 180...')">180</button>
       </div>
@@ -450,7 +1360,7 @@
         </div>
         <div class="contato-info">
           <div class="contato-nome">Policia Militar</div>
-          <div class="contato-desc">Emergência. Disponível 24h.</div>
+          <div class="contato-desc">Emergencia. Disponivel 24h.</div>
         </div>
         <button class="btn-ligar" onclick="mostrarToast('Ligando para 190...')">190</button>
       </div>
@@ -475,14 +1385,14 @@
           <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
         <div class="contato-info">
-          <div class="contato-nome">CVV — Centro de Valorização</div>
-          <div class="contato-desc">Apoio emocional e prevenção. 24h/dia.</div>
+          <div class="contato-nome">CVV — Centro de Valorizacao</div>
+          <div class="contato-desc">Apoio emocional e prevencao. 24h/dia.</div>
         </div>
         <button class="btn-ligar" onclick="mostrarToast('Ligando para 188...')">188</button>
       </div>
     </div>
 
-    <p style="font-size:0.8rem;font-weight:700;color:var(--lavanda);letter-spacing:0.06em;text-transform:uppercase;margin:20px 0 12px;border-bottom:1px solid var(--rosa-cha);padding-bottom:6px">Saúde</p>
+    <p style="font-size:0.8rem;font-weight:700;color:var(--lavanda);letter-spacing:0.06em;text-transform:uppercase;margin:20px 0 12px;border-bottom:1px solid var(--rosa-cha);padding-bottom:6px">Saude</p>
 
     <div class="lista-contatos">
       <div class="card-contato">
@@ -502,7 +1412,7 @@
         </div>
         <div class="contato-info">
           <div class="contato-nome">SAMU</div>
-          <div class="contato-desc">Urgência medica. Disponível 24h.</div>
+          <div class="contato-desc">Urgencia medica. Disponivel 24h.</div>
         </div>
         <button class="btn-ligar" onclick="mostrarToast('Ligando para 192...')">192</button>
       </div>
@@ -547,7 +1457,7 @@
       <div class="perfil-avatar" id="perfil-avatar">ME</div>
       <div class="perfil-dados">
         <div class="perfil-nome" id="perfil-nome">Mulheres Empoderadas</div>
-        <div class="perfil-lider" id="perfil-lider">Liderança: Valeria</div>
+        <div class="perfil-lider" id="perfil-lider">Lideranca: Valeria</div>
         <span class="perfil-tag" id="perfil-area">Empoderamento</span>
       </div>
     </div>
@@ -556,27 +1466,27 @@
   <div class="perfil-corpo">
     <div class="perfil-secao">
       <div class="perfil-secao-titulo">Sobre o coletivo</div>
-      <p class="perfil-texto" id="perfil-desc">Descrição do coletivo.</p>
+      <p class="perfil-texto" id="perfil-desc">Descricao do coletivo.</p>
     </div>
 
     <div class="perfil-secao">
-      <div class="perfil-secao-titulo">Informações</div>
+      <div class="perfil-secao-titulo">Informacoes</div>
       <div class="perfil-linha">
         <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <span id="perfil-local">SJBVista</span>
       </div>
       <div class="perfil-linha">
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.06 5.06l1.1-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 15z"/></svg>
-        <span id="perfil-contato">Contato não disponível</span>
+        <span id="perfil-contato">Contato nao disponivel</span>
       </div>
       <div class="perfil-linha">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <span id="perfil-encontros">Encontros periódicos</span>
+        <span id="perfil-encontros">Encontros periodicos</span>
       </div>
     </div>
 
     <div class="perfil-secao">
-      <div class="perfil-secao-titulo">Próximos eventos</div>
+      <div class="perfil-secao-titulo">Proximos eventos</div>
       <div id="perfil-eventos"></div>
     </div>
 
@@ -607,7 +1517,7 @@
 
   <div class="login-wrap">
     <div class="login-logo">FLORES<em>CER</em></div>
-    <p class="login-sub">Acesso exclusivo para lideranças e administradora</p>
+    <p class="login-sub">Acesso exclusivo para liderancas e administradora</p>
 
     <div class="form-grupo">
       <label class="form-label">E-mail</label>
@@ -623,7 +1533,7 @@
     <div class="login-divider">acesso restrito</div>
 
     <p style="font-size:0.8rem;color:var(--texto-sec);text-align:center;line-height:1.5">
-      Não tem acesso? Solicite a sua liderança de coletivo ou entre em contato com a administradora do FLORESCER.
+      Nao tem acesso? Solicite a sua lideranca de coletivo ou entre em contato com a administradora do FLORESCER.
     </p>
   </div>
 </div>
@@ -646,7 +1556,7 @@
     <h2>Bem-vinda ao seu painel</h2>
     <div class="painel-coletivo">
       <strong>Mulheres Empoderadas</strong>
-      Liderança: Valeria · SJBVista
+      Lideranca: Valeria · SJBVista
     </div>
   </div>
 
@@ -661,10 +1571,10 @@
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
       </div>
       <div class="acao-titulo">Editar perfil</div>
-      <div class="acao-desc">Atualize dados, foto e descrição do seu coletivo</div>
+      <div class="acao-desc">Atualize dados, foto e descricao do seu coletivo</div>
     </div>
 
-    <div class="acao-card" onclick="mostrarToast('Abrindo gestao de eventos...')">
+    <div class="acao-card" onclick="renderEventos();irPara('tela-gerenciar')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')this.click()">
       <div class="acao-icone">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </div>
@@ -685,7 +1595,7 @@
         <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
       <div class="acao-titulo">Ver como publica</div>
-      <div class="acao-desc">Veja como sua página aparece para as mulheres</div>
+      <div class="acao-desc">Veja como sua pagina aparece para as mulheres</div>
     </div>
   </div>
 
@@ -698,19 +1608,557 @@
       </div>
       <div style="display:flex;align-items:center;gap:10px;font-size:0.82rem;color:var(--texto-sec)">
         <span style="width:8px;height:8px;border-radius:50%;background:var(--coral);flex-shrink:0"></span>
-        Evento "Oficina de Empreendedorismo" publicado — 5 dias atrás
+        Evento "Oficina de Empreendedorismo" publicado — 5 dias atras
       </div>
       <div style="display:flex;align-items:center;gap:10px;font-size:0.82rem;color:var(--texto-sec)">
         <span style="width:8px;height:8px;border-radius:50%;background:var(--bege);flex-shrink:0"></span>
-        Coletivo aprovado e publicado — 12 dias atrás
+        Coletivo aprovado e publicado — 12 dias atras
       </div>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
 
-<script src="script.js"></script>
+<!-- TELA GERENCIAR EVENTOS -->
+<div class="tela" id="tela-gerenciar">
+  <div class="topbar">
+    <button class="topbar-btn" onclick="irPara('tela-painel')" aria-label="Voltar ao painel">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Painel
+    </button>
+    <span class="topbar-logo">FLORES<span>CER</span></span>
+    <div style="width:60px"></div>
+  </div>
+  <div class="ge-head">
+    <h2>Meus eventos</h2>
+    <p>Mulheres Empoderadas · só você e sua equipe editam estes eventos</p>
+  </div>
+  <div class="stats-strip" id="ge-stats" aria-live="polite"></div>
+  <button class="ge-novo" onclick="abrirForm(null)">+ Cadastrar novo evento</button>
+  <div class="ge-cal-wrap" style="padding:18px 20px 0">
+    <div class="cal" id="ge-cal" aria-label="Agenda de eventos"></div>
+  </div>
+  <div style="padding:18px 20px 0">
+    <div class="filtros" id="ge-filtros" role="group" aria-label="Filtrar eventos por situação"></div>
+  </div>
+  <div class="ge-lista" id="ge-lista"></div>
+</div>
+
+<!-- TELA FORMULARIO DE EVENTO -->
+<div class="tela" id="tela-evento-form">
+  <div class="topbar">
+    <button class="topbar-btn" onclick="irPara('tela-gerenciar')" aria-label="Voltar para meus eventos">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Voltar
+    </button>
+    <span class="topbar-logo">FLORES<span>CER</span></span>
+    <div style="width:60px"></div>
+  </div>
+  <div class="ge-head"><h2 id="f-titulo-tela">Novo evento</h2><p>Os campos com * são obrigatórios.</p></div>
+  <div class="ge-form" novalidate>
+    <div class="form-grupo">
+      <label class="form-label" for="f-titulo">Nome do evento *</label>
+      <input class="form-input" id="f-titulo" maxlength="200" placeholder="Ex.: Roda de conversa sobre autoestima" aria-describedby="e-titulo">
+      <div class="form-erro" id="e-titulo" role="alert"></div>
+    </div>
+    <div class="form-grupo">
+      <label class="form-label" for="f-desc">Descrição</label>
+      <textarea class="form-input" id="f-desc" placeholder="Conte o que vai acontecer, para quem é e o que levar."></textarea>
+    </div>
+    <div class="form-linha">
+      <div class="form-grupo">
+        <label class="form-label" for="f-data">Data *</label>
+        <input class="form-input" type="date" id="f-data" onchange="checarConflito()" aria-describedby="e-data">
+        <div class="form-erro" id="e-data" role="alert"></div>
+      </div>
+      <div class="form-grupo">
+        <label class="form-label" for="f-hora">Horário *</label>
+        <input class="form-input" type="time" id="f-hora" aria-describedby="e-hora">
+        <div class="form-erro" id="e-hora" role="alert"></div>
+      </div>
+    </div>
+    <div class="aviso" id="f-conflito" role="alert" hidden></div>
+    <div class="form-grupo">
+      <span class="form-label" id="l-mod">Como vai acontecer? *</span>
+      <div class="opcoes" role="radiogroup" aria-labelledby="l-mod">
+        <label class="opcao"><input type="radio" name="f-mod" value="presencial" checked onchange="ajustaMod()"><span>Presencial</span></label>
+        <label class="opcao"><input type="radio" name="f-mod" value="online" onchange="ajustaMod()"><span>Online</span></label>
+      </div>
+    </div>
+    <div class="form-grupo">
+      <label class="form-label" for="f-local" id="l-local">Local</label>
+      <input class="form-input" id="f-local" maxlength="300" placeholder="Endereço ou ponto de referência">
+    </div>
+    <div class="form-grupo">
+      <span class="form-label" id="l-lim">Vagas</span>
+      <div class="opcoes" role="radiogroup" aria-labelledby="l-lim">
+        <label class="opcao"><input type="radio" name="f-lim" value="aberto" checked onchange="ajustaLim()"><span>Sem limite</span></label>
+        <label class="opcao"><input type="radio" name="f-lim" value="limite" onchange="ajustaLim()"><span>Limitar vagas</span></label>
+      </div>
+      <div id="f-lim-box" hidden style="margin-top:10px">
+        <label class="form-label" for="f-limite">Número máximo de participantes</label>
+        <input class="form-input" type="number" min="1" id="f-limite" aria-describedby="e-limite">
+        <div class="form-dica">Com limite, a inscrição na plataforma passa a ser obrigatória e as vagas são contadas na hora.</div>
+        <div class="form-erro" id="e-limite" role="alert"></div>
+      </div>
+    </div>
+    <div class="form-grupo">
+      <label class="form-label" for="f-link">Link de inscrição externo</label>
+      <input class="form-input" type="url" id="f-link" placeholder="https://" aria-describedby="e-link">
+      <div class="form-erro" id="e-link" role="alert"></div>
+    </div>
+    <p class="nota-email" id="f-nota">Ao publicar, enviamos o evento por e-mail para as usuárias cadastradas em até 5 minutos. Ele ganha um link público para compartilhar.</p>
+    <button class="btn-login" onclick="salvarEvento()" id="f-salvar">Publicar evento</button>
+    <button class="btn-sec-full" onclick="irPara('tela-gerenciar')">Cancelar</button>
+  </div>
+</div>
+
+<div class="sheet-bg" id="sheet-bg" onclick="if(event.target===this)fecharSheet()">
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const coletivos = [
+  {
+    sigla: 'ME', cor: '#F28C6B',
+    nome: 'Mulheres Empoderadas',
+    lider: 'Valeria',
+    area: 'Empoderamento',
+    local: 'SJBVista — Centro',
+    contato: '(19) 99800-0001',
+    encontros: 'Toda terceira sabado, 15h',
+    desc: 'Espaco de fortalecimento feminino, autoestima e suporte mutuo para mulheres de todas as idades. Realizamos rodas de conversa, oficinas de desenvolvimento pessoal e acoes de visibilidade para mulheres de SJBVista.',
+    eventos: [
+      { dia:'09', mes:'JUN', titulo:'Validacao FLORESCER', hora:'19h — IFSP' },
+      { dia:'19', mes:'JUL', titulo:'Oficina de Empreendedorismo', hora:'14h — Online' }
+    ]
+  },
+  {
+    sigla: 'RS', cor: '#B07CC6',
+    nome: 'Roda Sagrada de Mulheres',
+    lider: 'Elaine Menato',
+    area: 'Espiritualidade',
+    local: 'SJBVista — Bela Vista',
+    contato: '(19) 99800-0002',
+    encontros: 'Toda lua nova, 17h',
+    desc: 'Encontros de cura, ancestralidade e reconexao com o feminino sagrado por meio de rodas e rituais. Trabalhamos com medicina de plantas, meditacao, danca circular e escuta ativa.',
+    eventos: [
+      { dia:'14', mes:'JUN', titulo:'Roda de Conversa — Saude da Mulher', hora:'15h — Praca da Matriz' }
+    ]
+  },
+  {
+    sigla: 'BM', cor: '#8B5A7A',
+    nome: 'Baque Mulher SJBVista',
+    lider: 'Karina Mattos',
+    area: 'Cultura',
+    local: 'SJBVista — Jardim Europa',
+    contato: '(19) 99800-0003',
+    encontros: 'Quartas, 19h',
+    desc: 'Coletivo de musica e percussao feminina. Promovemos a cultura afro-brasileira, a sororidade e a ocupacao dos espacos urbanos por mulheres artistas e percussionistas.',
+    eventos: [
+      { dia:'21', mes:'JUN', titulo:'Show de Baque Mulher — Solsticio', hora:'18h — Anfiteatro' }
+    ]
+  },
+  {
+    sigla: 'FI', cor: '#D96B4D',
+    nome: 'FeminIF',
+    lider: 'Fernanda Oliveira',
+    area: 'Universitario',
+    local: 'IFSP — Campus SJBVista',
+    contato: '(19) 99800-0004',
+    encontros: 'Quintas, 12h — IFSP',
+    desc: 'Coletivo feminista estudantil do IFSP-SBV. Trabalhamos por equidade de genero dentro e fora do campus, promovendo debates, eventos culturais e apoio a estudantes.',
+    eventos: [
+      { dia:'07', mes:'JUL', titulo:'Avaliacao comunitaria FLORESCER', hora:'19h45 — IFSP' }
+    ]
+  },
+  {
+    sigla: 'MC', cor: '#E8B28A',
+    corTexto: '#5A2E52',
+    nome: 'Mulheres de Coracao SJBVista',
+    lider: 'Cristina Cornelio',
+    area: 'Apoio mutuo',
+    local: 'SJBVista — Vila Nova',
+    contato: '(19) 99800-0005',
+    encontros: 'Sextas, 18h — Sede propria',
+    desc: 'Rede de apoio mutuo para mulheres em situacao de vulnerabilidade. Oferecemos escuta, encaminhamentos, doacao de cestas basicas e acompanhamento de casos.',
+    eventos: []
+  }
+];
+
+let filtroAtivo = 'Todos';
+let telaAnteriorPerfil = 'home';
+
+function irPara(id) {
+  document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+  const tela = document.getElementById(id);
+  if (tela) { tela.classList.add('ativa'); tela.scrollTop = 0; }
+  const desk = window.matchMedia('(min-width:960px)').matches;
+  if (desk && id === 'tela-evento-form') document.getElementById('tela-gerenciar').classList.add('ativa');
+  else window.scrollTo(0, 0);
+}
+
+function irNav(pagina) {
+  const mapa = {
+    'home':       'tela-home',
+    'coletivos':  'tela-coletivos',
+    'mapa':       'tela-mapa',
+    'eventos':    'tela-eventos',
+    'emergencia': 'tela-emergencia'
+  };
+  if (mapa[pagina]) { irPara(mapa[pagina]); renderColetivos(); }
+  atualizarNav(pagina);
+}
+
+function atualizarNav(pagina) {
+  document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('ativo'));
+  const todos = document.querySelectorAll('.nav-item');
+  const idx = { home:0, coletivos:1, mapa:2, eventos:3, emergencia:4 };
+  const telaAtiva = document.querySelector('.tela.ativa');
+  if (!telaAtiva) return;
+  telaAtiva.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('ativo'));
+  const i = idx[pagina];
+  if (i !== undefined) {
+    const navItems = telaAtiva.querySelectorAll('.nav-item');
+    if (navItems[i]) navItems[i].classList.add('ativo');
+  }
+}
+
+function irPerfil(idx) {
+  const c = coletivos[idx];
+  const telaAtual = document.querySelector('.tela.ativa');
+  if (telaAtual) telaAnteriorPerfil = telaAtual.id;
+
+  document.getElementById('perfil-avatar').textContent = c.sigla;
+  document.getElementById('perfil-avatar').style.background = c.cor;
+  if (c.corTexto) document.getElementById('perfil-avatar').style.color = c.corTexto;
+  else document.getElementById('perfil-avatar').style.color = '#fff';
+  document.getElementById('perfil-nome').textContent = c.nome;
+  document.getElementById('perfil-lider').textContent = 'Lideranca: ' + c.lider;
+  document.getElementById('perfil-area').textContent = c.area;
+  document.getElementById('perfil-desc').textContent = c.desc;
+  document.getElementById('perfil-local').textContent = c.local;
+  document.getElementById('perfil-contato').textContent = c.contato;
+  document.getElementById('perfil-encontros').textContent = c.encontros;
+
+  const header = document.querySelector('.perfil-header');
+  if (header) {
+    const cores = { Empoderamento:'#5A2E52', Espiritualidade:'#8B5A7A', Cultura:'#6B3D5C', Universitario:'#B07CC6', 'Apoio mutuo':'#D96B4D' };
+    header.style.background = cores[c.area] || '#5A2E52';
+  }
+
+  const perfilTag = document.getElementById('perfil-area');
+  if (perfilTag) perfilTag.style.borderColor = c.cor;
+
+  const eventosEl = document.getElementById('perfil-eventos');
+  if (c.eventos.length === 0) {
+    eventosEl.innerHTML = '<p style="font-size:0.82rem;color:var(--texto-sec)">Nenhum evento agendado no momento.</p>';
+  } else {
+    eventosEl.innerHTML = c.eventos.map(e => `
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--creme)">
+        <div style="background:var(--ameixa);color:var(--creme);border-radius:6px;padding:6px 8px;text-align:center;flex-shrink:0;min-width:42px">
+          <div style="font-weight:700;font-size:1.1rem;line-height:1">${e.dia}</div>
+          <div style="font-size:0.6rem;font-weight:600;text-transform:uppercase;margin-top:2px;opacity:.8">${e.mes}</div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--ameixa)">${e.titulo}</div>
+          <div style="font-size:0.75rem;color:var(--texto-sec);margin-top:2px">${e.hora}</div>
+        </div>
+      </div>`).join('');
+  }
+  irPara('tela-perfil');
+}
+
+function voltarPerfil() {
+  irPara(telaAnteriorPerfil || 'tela-home');
+}
+
+function renderColetivos() {
+  const container = document.getElementById('lista-coletivos');
+  if (!container) return;
+  const busca = (document.getElementById('input-busca') || {}).value || '';
+  const lista = coletivos.filter(c => {
+    const matchArea = filtroAtivo === 'Todos' || c.area === filtroAtivo;
+    const matchBusca = !busca || c.nome.toLowerCase().includes(busca.toLowerCase()) || c.area.toLowerCase().includes(busca.toLowerCase());
+    return matchArea && matchBusca;
+  });
+  if (lista.length === 0) {
+    container.innerHTML = '<p style="font-size:0.85rem;color:var(--texto-sec);padding:8px 0">Nenhum coletivo encontrado para esta busca.</p>';
+    return;
+  }
+  container.innerHTML = lista.map((c, i) => {
+    const idx = coletivos.indexOf(c);
+    return `<div class="card-coletivo" onclick="irPerfil(${idx})">
+      <div class="card-coletivo-header" style="background:${c.cor}">
+        <div class="avatar" style="background:rgba(255,255,255,0.25);color:#fff">${c.sigla}</div>
+        <div>
+          <div class="card-nome">${c.nome}</div>
+          <div class="card-lider">Lideranca: ${c.lider}</div>
+        </div>
+      </div>
+      <div class="card-corpo">
+        <span class="card-tag" style="color:${c.cor}">${c.area}</span>
+        <p class="card-desc">${c.desc.substring(0,110)}...</p>
+        <div class="card-rodape">
+          <span class="card-local">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--malva)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${c.local}
+          </span>
+          <button class="btn-ver" onclick="event.stopPropagation();irPerfil(${idx})">Ver perfil</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setFiltro(area, btn) {
+  filtroAtivo = area;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderColetivos();
+}
+
+function filtrarColetivos() { renderColetivos(); }
+
+function fazerLogin() {
+  const email = document.getElementById('login-email').value;
+  const senha = document.getElementById('login-senha').value;
+  if (!email || !senha) { mostrarToast('Preencha e-mail e senha'); return; }
+  mostrarToast('Entrando na plataforma...');
+  setTimeout(() => irPara('tela-painel'), 800);
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('visivel');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('visivel'), Math.max(3000, msg.length * 80));
+}
+
+renderColetivos();
+
+/* ── GERENCIAR EVENTOS ─────────────────────────────── */
+const COL = { sigla:'ME', cor:'#F28C6B', nome:'Mulheres Empoderadas' };
+const dAdd = n => new Date(Date.now() - new Date().getTimezoneOffset()*60000 + n*864e5).toISOString().slice(0,10);
+const hoje = dAdd(0);
+let eventos = [
+  { id:1, titulo:'Validação FLORESCER', desc:'Encontro para validar a plataforma com as lideranças.', data:dAdd(-30), hora:'19:00', local:'IFSP — Câmpus SJBVista', mod:'presencial', limite:null, inscritas:0, status:'encerrado', link:'' },
+  { id:2, titulo:'Oficina de Empreendedorismo', desc:'Como transformar uma ideia em renda. Traga caderno e caneta.', data:dAdd(9), hora:'14:00', local:'', mod:'online', limite:20, inscritas:12, status:'ativo', link:'' },
+  { id:3, titulo:'Roda de Conversa: Autoestima', desc:'Troca de experiências em grupo pequeno.', data:dAdd(16), hora:'15:00', local:'Centro, SJBVista', mod:'presencial', limite:15, inscritas:15, status:'ativo', link:'' }
+];
+let evFiltro = 'todos', evEditId = null, evProx = 4;
+const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+const ROTULO = { ativo:'Ativo', lotado:'Lotado', cancelado:'Cancelado', encerrado:'Encerrado' };
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const st = e => (e.status === 'cancelado' || e.status === 'encerrado') ? e.status : (e.limite && e.inscritas >= e.limite ? 'lotado' : 'ativo');
+const urlEv = e => 'https://florescer.app/evento/' + e.id + '-' + e.titulo.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const dataBr = d => d.split('-').reverse().join('/');
+let calMes = new Date(hoje + 'T12:00:00'); calMes.setDate(1);
+let calModo = 'mes';
+const MESES_L = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const SEM = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const isoLocal = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+const hh = t => t.replace(':','h').replace(/h00$/,'h');
+
+function calMudar(n) { calMes.setMonth(calMes.getMonth() + n); renderEventos(); }
+function calHoje() { calMes = new Date(hoje + 'T12:00:00'); calMes.setDate(1); renderEventos(); }
+function calModoSet(m) { calModo = m; renderEventos(); }
+function calClicaDia(d) { if (d >= hoje) abrirForm(null, d); }
+
+function renderCal() {
+  const ano = calMes.getFullYear(), mes = calMes.getMonth();
+  let h = '<div class="cal-bar">';
+  if (calModo === 'mes') h += `<button onclick="calHoje()">Hoje</button><button class="cal-seta" onclick="calMudar(-1)" aria-label="Mês anterior">&#8249;</button><button class="cal-seta" onclick="calMudar(1)" aria-label="Próximo mês">&#8250;</button><span class="cal-titulo" aria-live="polite">${MESES_L[mes]} de ${ano}</span>`;
+  else h += '<span class="cal-titulo">Todos os eventos</span>';
+  h += `<div class="cal-modo" role="group" aria-label="Modo de visualização"><button class="${calModo==='mes'?'ativo':''}" aria-pressed="${calModo==='mes'}" onclick="calModoSet('mes')">Mês</button><button class="${calModo==='lista'?'ativo':''}" aria-pressed="${calModo==='lista'}" onclick="calModoSet('lista')">Lista</button></div></div>`;
+  if (calModo === 'mes') {
+    const inicio = new Date(ano, mes, 1).getDay(), total = new Date(ano, mes + 1, 0).getDate();
+    const celulas = Math.ceil((inicio + total) / 7) * 7;
+    h += '<div class="cal-grade">' + SEM.map(s => `<div class="cal-sem">${s}</div>`).join('');
+    for (let i = 0; i < celulas; i++) {
+      const dt = new Date(ano, mes, 1 - inicio + i), data = isoLocal(dt);
+      const evs = eventos.filter(e => e.data === data);
+      const cls = ['cal-cel', dt.getMonth() !== mes ? 'fora' : '', data === hoje ? 'hoje' : '', data < hoje ? 'passado' : ''].join(' ');
+      h += `<div class="${cls}" role="button" tabindex="0" aria-label="${dt.getDate()} de ${MESES_L[dt.getMonth()]}${evs.length ? ', ' + evs.length + ' evento(s)' : ''}" onclick="calClicaDia('${data}')" onkeydown="if(event.key==='Enter'&&event.target===this)calClicaDia('${data}')"><span class="cal-num">${dt.getDate()}</span>` +
+        evs.slice(0, 2).map(e => `<button class="cal-chip c-${st(e)}" onclick="event.stopPropagation();abrirEvento(${e.id})" title="${esc(e.titulo)}">${hh(e.hora)} ${esc(e.titulo)}</button>`).join('') +
+        (evs.length > 2 ? `<button class="cal-mais" onclick="event.stopPropagation();abrirDia('${data}')">+${evs.length - 2} mais</button>` : '') + '</div>';
+    }
+    h += '</div>';
+  }
+  $('ge-cal').innerHTML = h;
+}
+
+function abrirEvento(id) {
+  const e = eventos.find(x => x.id === id), s = st(e), vivo = s === 'ativo' || s === 'lotado';
+  abrirSheet(`<h3>${esc(e.titulo)}</h3><div class="cal-det"><span class="badge b-${s}" style="align-self:flex-start">${ROTULO[s]}</span>
+    <span>${dataBr(e.data)} às ${hh(e.hora)} · ${e.mod === 'online' ? 'Online' : 'Presencial'}${e.local ? ' · ' + esc(e.local) : ''}</span>
+    ${e.limite ? `<span><strong>${e.inscritas}</strong> de ${e.limite} vagas preenchidas</span>` : (vivo ? '<span>Vagas abertas, sem limite</span>' : '')}
+    ${e.desc ? `<span>${esc(e.desc)}</span>` : ''}</div>
+    ${vivo ? `<button class="btn-login" onclick="abrirDivulgar(${id})">Divulgar</button><button class="btn-sec-full" onclick="fecharSheet();abrirForm(${id})">Editar</button><button class="btn-sec-full" style="color:#9B2C1C" onclick="confirmarFim(${id})">Encerrar evento</button>` : `<button class="btn-login" onclick="copiarLink(${id})">Copiar link</button>`}
+    <button class="btn-sec-full" onclick="fecharSheet()">Fechar</button>`);
+}
+function abrirDia(d) {
+  const evs = eventos.filter(e => e.data === d);
+  abrirSheet(`<h3>${dataBr(d)}</h3><div class="cal-dia-lista">${evs.map(e => `<button class="ge-btn" onclick="abrirEvento(${e.id})">${hh(e.hora)} · ${esc(e.titulo)}</button>`).join('')}</div>
+    ${d >= hoje ? `<button class="btn-login" onclick="fecharSheet();abrirForm(null,'${d}')">+ Cadastrar neste dia</button>` : ''}<button class="btn-sec-full" onclick="fecharSheet()">Fechar</button>`);
+}
+
+function renderEventos() {
+  eventos.sort((a,b) => (a.data+a.hora).localeCompare(b.data+b.hora));
+  const n = f => eventos.filter(e => f === 'todos' || (f === 'ativo' ? ['ativo','lotado'].includes(st(e)) : ['cancelado','encerrado'].includes(st(e)))).length;
+  $('ge-stats').innerHTML =
+    `<div class="stat-item"><span class="stat-num">${n('ativo')}</span><span class="stat-label">eventos em aberto</span></div>` +
+    `<div class="stat-item"><span class="stat-num">${eventos.filter(e=>st(e)==='lotado').length}</span><span class="stat-label">lotados</span></div>` +
+    `<div class="stat-item"><span class="stat-num">${eventos.filter(e=>['ativo','lotado'].includes(st(e))).reduce((s,e)=>s+e.inscritas,0)}</span><span class="stat-label">inscrições</span></div>`;
+  $('ge-filtros').innerHTML = [['todos','Todos'],['ativo','Em aberto'],['fim','Encerrados e cancelados']].map(([k,t]) =>
+    `<button class="filtro-btn ${evFiltro===k?'ativo':''}" aria-pressed="${evFiltro===k}" onclick="evFiltro='${k}';renderEventos()">${t} (${n(k)})</button>`).join('');
+  renderCal();
+  const lista = eventos.filter(e => (evFiltro === 'todos' || (evFiltro === 'ativo' ? ['ativo','lotado'].includes(st(e)) : ['cancelado','encerrado'].includes(st(e)))));
+  if (!lista.length) { $('ge-lista').innerHTML = '<div class="ge-vazio">Nenhum evento aqui ainda.<br>Toque em "Cadastrar novo evento" para começar.</div>'; return; }
+  $('ge-lista').innerHTML = lista.map(e => {
+    const s = st(e), vivo = s === 'ativo' || s === 'lotado', [, m, d] = e.data.split('-');
+    const pct = e.limite ? Math.min(100, Math.round(e.inscritas / e.limite * 100)) : 0;
+    return `<article class="ge-card ${vivo?'':'inativo'}">
+      <div class="ge-topo">
+        <div class="ge-data"><b>${d}</b><span>${MESES[+m-1]}</span></div>
+        <div class="ge-info">
+          <span class="badge b-${s}">${ROTULO[s]}</span>
+          <div class="ge-titulo">${esc(e.titulo)}</div>
+          <div class="ge-meta">${e.hora.replace(':','h').replace(/h00$/,'h')} · ${e.mod === 'online' ? 'Online' : 'Presencial'}${e.local ? ' · ' + esc(e.local) : ''}</div>
+        </div>
+      </div>
+      ${e.limite ? `<div class="vagas"><div class="vagas-txt"><span><strong>${e.inscritas}</strong> de ${e.limite} vagas preenchidas</span><span>${s==='lotado'?'Sem vagas':(e.limite-e.inscritas)+' livres'}</span></div><div class="barra" role="progressbar" aria-valuenow="${e.inscritas}" aria-valuemin="0" aria-valuemax="${e.limite}" aria-label="Vagas preenchidas"><i class="${pct>=100?'cheia':''}" style="width:${pct}%"></i></div></div>` : (vivo ? '<div class="ge-meta" style="margin-top:10px">Vagas abertas, sem limite de participantes</div>' : '')}
+      <div class="ge-acoes">
+        ${vivo ? `<button class="ge-btn forte" onclick="abrirDivulgar(${e.id})">Divulgar</button>
+        <button class="ge-btn" onclick="abrirForm(${e.id})">Editar</button>
+        <button class="ge-link" onclick="confirmarFim(${e.id})">Encerrar evento</button>` :
+        `<button class="ge-btn" onclick="copiarLink(${e.id})">Copiar link</button>`}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function abrirForm(id, dataPre) {
+  evEditId = id;
+  const e = id ? eventos.find(x => x.id === id) : { titulo:'', desc:'', data:dataPre || '', hora:'', local:'', mod:'presencial', limite:null };
+  $('f-titulo-tela').textContent = id ? 'Editar evento' : 'Novo evento';
+  $('f-salvar').textContent = id ? 'Salvar alterações' : 'Publicar evento';
+  $('f-nota').hidden = !!id;
+  $('f-titulo').value = e.titulo; $('f-desc').value = e.desc; $('f-data').value = e.data;
+  $('f-hora').value = e.hora; $('f-local').value = e.local; $('f-link').value = e.linkExt || '';
+  document.querySelector(`input[name=f-mod][value=${e.mod}]`).checked = true;
+  document.querySelector(`input[name=f-lim][value=${e.limite ? 'limite' : 'aberto'}]`).checked = true;
+  $('f-limite').value = e.limite || '';
+  ['titulo','data','hora','limite','link'].forEach(k => erro(k, ''));
+  $('f-data').min = (id && e.data < hoje) ? e.data : hoje;
+  ajustaMod(); ajustaLim(); checarConflito(); irPara('tela-evento-form');
+}
+function ajustaMod() { const on = document.querySelector('input[name=f-mod]:checked').value === 'online'; $('l-local').textContent = on ? 'Link ou plataforma (opcional)' : 'Local'; $('f-local').placeholder = on ? 'Ex.: Google Meet' : 'Endereço ou ponto de referência'; }
+function ajustaLim() { $('f-lim-box').hidden = document.querySelector('input[name=f-lim]:checked').value !== 'limite'; }
+function erro(k, msg) { $('e-' + k).textContent = msg; const i = $('f-' + k); if (i) { i.classList.toggle('erro', !!msg); i.setAttribute('aria-invalid', !!msg); } }
+
+/* RF02: alerta informativo de conflito, exige confirmação (RN02) */
+function checarConflito() {
+  const d = $('f-data').value, box = $('f-conflito');
+  const c = d ? eventos.filter(e => e.data === d && e.id !== evEditId && st(e) !== 'cancelado') : [];
+  if (!c.length) { box.hidden = true; box.innerHTML = ''; return; }
+  box.hidden = false;
+  box.innerHTML = `Já existe ${c.length > 1 ? c.length + ' eventos' : 'um evento'} neste dia: <strong>${c.map(e => esc(e.titulo) + ' (' + e.hora.replace(':','h') + ')').join(', ')}</strong>. Você pode continuar, mas precisa confirmar.
+    <label><input type="checkbox" id="f-conf-ok"> Quero cadastrar mesmo assim</label>`;
+}
+
+function validar(k) {
+  const v = id => $(id).value.trim(), lim = document.querySelector('input[name=f-lim]:checked').value === 'limite';
+  const atual = evEditId ? eventos.find(x => x.id === evEditId) : null;
+  let m = '';
+  if (k === 'titulo' && v('f-titulo').length < 3) m = 'Dê um nome ao evento (mínimo de 3 letras).';
+  if (k === 'data') { const d = v('f-data'); if (!d) m = 'Escolha a data do evento.'; else if (d < hoje && !(atual && atual.data === d)) m = 'Essa data já passou. Escolha uma data a partir de hoje.'; }
+  if (k === 'hora' && !v('f-hora')) m = 'Informe o horário de início.';
+  if (k === 'limite' && lim) { const n = parseInt(v('f-limite'), 10); if (!(n >= 1)) m = 'Informe um número de vagas maior que zero.'; else if (atual && n < atual.inscritas) m = `O limite não pode ser menor que as ${atual.inscritas} inscrições já feitas.`; }
+  if (k === 'link' && v('f-link') && !/^https?:\/\/\S+\.\S+/.test(v('f-link'))) m = 'Esse link parece incompleto. Comece com https://';
+  erro(k, m); return !m;
+}
+['titulo','data','hora','limite','link'].forEach(k => {
+  $('f-' + k).addEventListener('blur', () => validar(k));
+  $('f-' + k).addEventListener('input', () => { if ($('e-' + k).textContent) validar(k); });
+});
+
+function salvarEvento() {
+  const v = id => $(id).value.trim(), lim = document.querySelector('input[name=f-lim]:checked').value === 'limite';
+  const atual = evEditId ? eventos.find(x => x.id === evEditId) : null;
+  let ok = ['titulo','data','hora','limite','link'].map(validar).every(Boolean);
+  const n = parseInt(v('f-limite'), 10);
+  const conf = $('f-conflito');
+  if (ok && !conf.hidden && !$('f-conf-ok').checked) { ok = false; conf.scrollIntoView({ behavior:'smooth', block:'center' }); mostrarToast('Confirme o aviso de data para continuar'); }
+  if (!ok) { const p = document.querySelector('.form-input.erro'); if (p) p.focus(); return; }
+  const dados = { titulo:v('f-titulo'), desc:v('f-desc'), data:v('f-data'), hora:v('f-hora'), local:v('f-local'), mod:document.querySelector('input[name=f-mod]:checked').value, limite:lim ? n : null, linkExt:v('f-link') };
+  let novoId = null;
+  if (atual) { Object.assign(atual, dados); mostrarToast('Alterações salvas'); }
+  else { novoId = evProx; eventos.push({ id:evProx++, inscritas:0, status:'ativo', link:'', ...dados }); }
+  renderEventos(); irPara('tela-gerenciar'); if (novoId) abrirDivulgar(novoId, true);
+}
+
+function copiarLink(id) {
+  const e = eventos.find(x => x.id === id), u = urlEv(e);
+  const ok = () => mostrarToast('Link copiado');
+  if (navigator.clipboard) navigator.clipboard.writeText(u).then(ok, () => mostrarToast(u)); else mostrarToast(u);
+}
+function zap(id) {
+  const e = eventos.find(x => x.id === id);
+  const t = `*${e.titulo}*\n${dataBr(e.data)} às ${e.hora.replace(':','h')}${e.local ? '\n' + e.local : ''}\nMais informações: ${urlEv(e)}`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank', 'noopener');
+}
+
+function abrirSheet(h) { $('sheet').innerHTML = h; $('sheet-bg').classList.add('aberto'); const b = $('sheet').querySelector('button'); if (b) b.focus(); }
+function fecharSheet() { $('sheet-bg').classList.remove('aberto'); }
+document.addEventListener('keydown', k => { if (k.key === 'Escape') fecharSheet(); });
+
+function abrirDivulgar(id, novo) {
+  const e = eventos.find(x => x.id === id);
+  abrirSheet(`<h3>${novo ? 'Evento publicado' : 'Divulgar evento'}</h3><p>${novo ? 'Os e-mails para as usuárias saem em até 5 minutos. ' : ''}Link público: <strong style="word-break:break-all">${urlEv(e)}</strong></p>
+    <button class="btn-login" onclick="zap(${id})">Enviar pelo WhatsApp</button>
+    <button class="btn-sec-full" onclick="copiarLink(${id})">Copiar link</button>
+    <button class="btn-sec-full" onclick="abrirCard(${id})">Gerar card para redes sociais</button>
+    <button class="btn-sec-full" onclick="fecharSheet()">${novo ? 'Agora não' : 'Fechar'}</button>`);
+}
+
+function confirmarFim(id) {
+  const e = eventos.find(x => x.id === id);
+  abrirSheet(`<h3>Encerrar "${esc(e.titulo)}"?</h3><p>As inscrições deixam de ser aceitas e o evento sai da lista pública. O link continua funcionando.</p>
+    <button class="btn-login" onclick="mudarStatus(${id},'encerrado')">Marcar como encerrado</button>
+    <button class="btn-sec-full" style="color:#9B2C1C" onclick="mudarStatus(${id},'cancelado')">Cancelar este evento</button>
+    <button class="btn-sec-full" onclick="fecharSheet()">Voltar</button>`);
+}
+function mudarStatus(id, s) { eventos.find(x => x.id === id).status = s; fecharSheet(); renderEventos(); mostrarToast(s === 'cancelado' ? 'Evento cancelado' : 'Evento encerrado'); }
+
+/* RF07: card de divulgacao com identidade do coletivo e marca FLORESCER discreta */
+function abrirCard(id) {
+  const e = eventos.find(x => x.id === id);
+  abrirSheet(`<h3>Card de divulgação</h3><p>Pronto para postar nos Stories ou mandar em grupos.</p><canvas id="cv" width="1080" height="1350" role="img" aria-label="Prévia do card do evento ${esc(e.titulo)}"></canvas>
+    <button class="btn-login" onclick="baixarCard(${id})">Baixar imagem (PNG)</button><button class="btn-sec-full" onclick="fecharSheet()">Fechar</button>`);
+  const c = $('cv').getContext('2d'), P = "'Poppins','Inter',sans-serif";
+  c.fillStyle = '#F4E7D8'; c.fillRect(0,0,1080,1350);
+  c.fillStyle = COL.cor; c.fillRect(0,0,1080,280);
+  c.fillStyle = '#2D1B26'; c.font = `700 56px ${P}`; c.fillText(COL.nome, 80, 150);
+  c.font = `500 34px ${P}`; c.fillText('convida para', 80, 205);
+  c.fillStyle = '#5A2E52'; c.font = `700 84px ${P}`;
+  let y = 440; quebra(c, e.titulo, 920).slice(0,4).forEach(l => { c.fillText(l, 80, y); y += 104; });
+  y += 50; c.font = `600 48px ${P}`; c.fillStyle = '#8B5A7A';
+  c.fillText(`${dataBr(e.data)} às ${e.hora.replace(':','h')}`, 80, y); y += 72;
+  c.font = `500 42px ${P}`; c.fillText(e.mod === 'online' ? 'Online' : (e.local || 'Presencial'), 80, y, 920);
+  if (e.limite) { y += 72; c.fillText(`${e.limite} vagas`, 80, y); }
+  c.fillStyle = '#5A2E52'; c.fillRect(0,1250,1080,100);
+  c.fillStyle = 'rgba(244,231,216,.85)'; c.font = `600 28px ${P}`; c.textAlign = 'center';
+  c.fillText('Divulgado pelo FLORESCER', 540, 1308); c.textAlign = 'left';
+}
+function quebra(c, t, w) { const out = []; let l = ''; t.split(' ').forEach(p => { const x = l ? l + ' ' + p : p; if (c.measureText(x).width > w && l) { out.push(l); l = p; } else l = x; }); if (l) out.push(l); return out; }
+function baixarCard(id) { const a = document.createElement('a'); a.download = 'evento-' + id + '.png'; a.href = $('cv').toDataURL('image/png'); a.click(); mostrarToast('Imagem baixada'); }
+
+document.addEventListener('keydown', k => { const f = $('tela-evento-form'); if (k.key === 'Escape' && f.classList.contains('ativa') && !$('sheet-bg').classList.contains('aberto')) irPara('tela-gerenciar'); });
+renderEventos();
+</script>
 </body>
 </html>
+Exibindo mvp-Florescer…
